@@ -1,6 +1,6 @@
 import {capitalize} from '@core/utils';
 
-export class DOMListner {
+export class DOMListener {
   constructor($root, listeners = []) {
     if (!$root) {
       throw new Error(`No $root provided for DOMListner`)
@@ -10,8 +10,8 @@ export class DOMListner {
   }
 
   initDOMListeners() {
-    this.listeners.forEach(listner => {
-      const method = getMethodName(listner);
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener);
       if (!this[method]) {
         const name = this.name || '';
         throw new Error(
@@ -20,14 +20,14 @@ export class DOMListner {
       }
       this[method] = this[method].bind(this);
       // Тоже самое что и addEventListener
-      this.$root.on(listner, this[method])
+      this.$root.on(listener, this[method])
     })
   }
 
   removeDOMListener() {
-    this.listeners.forEach(listner => {
-      const method = getMethodName(listner);
-      this.$root.off(listner, this[method])
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener);
+      this.$root.off(listener, this[method])
     })
   }
 }
